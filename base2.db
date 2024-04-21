@@ -1,0 +1,20 @@
+-- Таблица для типов пользователей
+CREATE TABLE IF NOT EXISTS User_types (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    utype TEXT NOT NULL UNIQUE
+);
+
+-- Таблица для пользователей
+CREATE TABLE IF NOT EXISTS Users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    login TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL,
+    utype_id INTEGER,
+    FOREIGN KEY (utype_id) REFERENCES User_types(id) ON DELETE CASCADE
+);
+
+-- Вставляем данные по умолчанию
+INSERT OR IGNORE INTO User_types (utype) VALUES ('Администратор');
+INSERT OR IGNORE INTO User_types (utype) VALUES ('Пользователь');
+
+INSERT OR IGNORE INTO Users (login, password, utype_id) VALUES ('admin', '21232f297a57a5a743894a0e4a801fc3', 1); -- Пароль: admin
